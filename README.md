@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Project 2 — AWS EC2 Flask Web App (Apache + mod_wsgi + SQLite)
 
 ## Live URL (Submission)
@@ -61,3 +62,6 @@ sudo apt-get install apache2
 sudo apt-get install libapache2-mod-wsgi-py3
 sudo apt-get install python3-pip python3-venv sqlite3
 sudo systemctl restart apache2
+=======
+# Project-2-AWS-FlaskProject
+>>>>>>> d8e7fb1d127821da23d5c2066166d5d9847adb8f

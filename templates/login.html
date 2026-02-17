@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Re-Login</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#101a2f; --muted:#9fb0d0; --text:#eaf0ff;
+      --accent:#6ea8fe; --danger:#fb7185; --border:rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35); --radius:16px; --radius-sm:12px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background: radial-gradient(900px 600px at 30% 10%, rgba(110,168,254,.22), transparent 55%),
+                  var(--bg);
+      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .card{
+      width:100%; max-width:520px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .head{padding:20px 22px; border-bottom:1px solid var(--border);}
+    h1{margin:0; font-size:18px;}
+    .sub{margin:6px 0 0; color:var(--muted); font-size:13px;}
+    .content{padding:22px;}
+    .field label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px;}
+    .field input{
+      width:100%; padding:12px; border-radius:var(--radius-sm);
+      border:1px solid var(--border); background: rgba(0,0,0,.18);
+      color:var(--text); outline:none; margin-bottom:12px;
+    }
+    .field input:focus{border-color: rgba(110,168,254,.55); box-shadow:0 0 0 4px rgba(110,168,254,.15);}
+    .btn{
+      width:100%;
+      border:none; padding:12px 14px; border-radius:14px; cursor:pointer;
+      font-weight:700; font-size:14px; color:#06101f;
+      background: linear-gradient(135deg, var(--accent), #8bc0ff);
+      box-shadow:0 10px 18px rgba(110,168,254,.18);
+    }
+    .btn:hover{filter:brightness(1.04)}
+    .row{display:flex; justify-content:space-between; gap:12px; margin-top:12px; flex-wrap:wrap;}
+    .link{color:var(--accent); text-decoration:none; font-weight:600; font-size:13px;}
+    .flash{
+      border:1px solid rgba(251,113,133,.35);
+      background: rgba(251,113,133,.12);
+      color:#ffd5dc;
+      padding:10px 12px;
+      border-radius:12px;
+      margin-bottom:12px;
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <h1>Re-Login</h1>
+      <p class="sub">Enter username + password to retrieve your stored profile.</p>
+    </div>
+    <div class="content">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="flash">{{ msg }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="/login">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" name="username" required>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" required>
+        </div>
+        <button class="btn" type="submit">Login</button>
+      </form>
+
+      <div class="row">
+        <a class="link" href="/register">← Back to Registration</a>
+        <span style="color:var(--muted); font-size:12px;">Secure session via Flask</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
