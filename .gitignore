@@ -1,0 +1,22 @@
+# Never upload keys
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+.env
+
+# SQLite DB (generated on server)
+*.db
+
+# Uploads (generated on server)
+uploads/
+app/uploads/
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Profile</title>
+  <style>
+    :root{
+      --bg:#0b1220; --muted:#9fb0d0; --text:#eaf0ff;
+      --card: rgba(255,255,255,.06); --border:rgba(255,255,255,.10);
+      --accent:#6ea8fe; --accent2:#34d399; --danger:#fb7185;
+      --shadow: 0 10px 30px rgba(0,0,0,.35); --radius:16px; --radius-sm:12px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background: radial-gradient(1000px 700px at 20% 10%, rgba(110,168,254,.25), transparent 55%),
+                  radial-gradient(900px 700px at 80% 40%, rgba(52,211,153,.16), transparent 55%),
+                  var(--bg);
+      min-height:100vh;
+      padding:24px;
+    }
+    .topbar{
+      max-width:980px; margin:0 auto 16px;
+      display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+    }
+    .title{display:flex; align-items:center; gap:10px;}
+    .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));}
+    h1{margin:0;font-size:18px;}
+    .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+    .chip{
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.15);
+      color:var(--muted); font-size:12px;
+    }
+    .wrap{max-width:980px; margin:0 auto; display:grid; grid-template-columns: 1.2fr .8fr; gap:16px;}
+    @media (max-width: 920px){ .wrap{grid-template-columns:1fr;} }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card .head{padding:18px 20px; border-bottom:1px solid var(--border);}
+    .card .content{padding:18px 20px;}
+    .kv{display:grid; grid-template-columns: 140px 1fr; gap:10px 14px; align-items:center;}
+    .k{color:var(--muted); font-size:13px;}
+    .v{font-weight:650; font-size:14px; overflow-wrap:anywhere;}
+    .divider{height:1px; background: var(--border); margin:16px 0;}
+    .flash{
+      border:1px solid rgba(52,211,153,.35);
+      background: rgba(52,211,153,.12);
+      color:#c9ffe9;
+      padding:10px 12px;
+      border-radius:12px;
+      margin-bottom:12px;
+      font-size:13px;
+    }
+    .flash.danger{
+      border-color: rgba(251,113,133,.35);
+      background: rgba(251,113,133,.12);
+      color:#ffd5dc;
+    }
+    .upload{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    input[type="file"]{
+      padding:10px; border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color:var(--muted);
+    }
+    .btn{
+      border:none; padding:11px 14px; border-radius:14px;
+      cursor:pointer; font-weight:700; font-size:14px;
+      color:#06101f;
+      background: linear-gradient(135deg, var(--accent), #8bc0ff);
+      box-shadow:0 10px 18px rgba(110,168,254,.18);
+    }
+    .btn:hover{filter:brightness(1.04)}
+    .btn.secondary{
+      background: transparent;
+      color: var(--text);
+      border:1px solid var(--border);
+      box-shadow:none;
+      font-weight:650;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .big{
+      font-size:22px;
+      font-weight:800;
+      letter-spacing:.2px;
+      margin:6px 0 0;
+    }
+    .stat{
+      display:grid;
+      gap:10px;
+    }
+    .statbox{
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.15);
+    }
+    .statlabel{color:var(--muted); font-size:12px;}
+    .statvalue{font-size:16px; font-weight:800; margin-top:6px;}
+    a{color:inherit}
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="title">
+      <div class="logo"></div>
+      <div>
+        <h1>User Details (Display Page)</h1>
+        <p class="sub">Your info is stored in SQLite and shown here.</p>
+      </div>
+    </div>
+    <div class="chip">Logged in as <b>{{ username }}</b></div>
+  </div>
+
+  <div class="wrap">
+    <!-- Left: Profile -->
+    <div class="card">
+      <div class="head">
+        <b>Profile</b>
+      </div>
+      <div class="content">
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="flash">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="kv">
+          <div class="k">Username</div><div class="v">{{ username }}</div>
+          <div class="k">First name</div><div class="v">{{ firstname }}</div>
+          <div class="k">Last name</div><div class="v">{{ lastname }}</div>
+          <div class="k">Email</div><div class="v">{{ email }}</div>
+          <div class="k">Address</div><div class="v">{{ address }}</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <b>Upload Limerick.txt</b>
+        <p class="meta" style="margin-top:6px;">
+          Upload a <code>.txt</code> file. The server stores it and shows the word count.
+        </p>
+
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="upload">
+          <input type="file" name="file" accept=".txt" required>
+          <button class="btn" type="submit">Upload</button>
+          {% if uploaded_filename %}
+            <a href="/download/{{ uploaded_filename }}" style="text-decoration:none;">
+              <button class="btn secondary" type="button">Download File</button>
+            </a>
+          {% endif %}
+        </form>
+
+        {% if uploaded_filename %}
+          <div class="divider"></div>
+          <div class="meta"><b>Stored file:</b> {{ uploaded_filename }}</div>
+          <div class="meta"><b>Word count:</b> {{ word_count }}</div>
+        {% else %}
+          <div class="divider"></div>
+          <div class="meta">No file uploaded yet.</div>
+        {% endif %}
+
+        <div class="divider"></div>
+
+        <form method="POST" action="/logout">
+          <button class="btn secondary" type="submit">Logout</button>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- Right: Quick stats -->
+    <div class="card">
+      <div class="head">
+        <b>Quick Summary</b>
+      </div>
+      <div class="content stat">
+        <div class="statbox">
+          <div class="statlabel">Account</div>
+          <div class="statvalue">{{ firstname }} {{ lastname }}</div>
+          <div class="meta" style="margin-top:6px;">This page is generated from SQLite (retrieved by username).</div>
+        </div>
+
+        <div class="statbox">
+          <div class="statlabel">Upload Status</div>
+          {% if uploaded_filename %}
+            <div class="statvalue">File stored ✅</div>
+            <div class="meta" style="margin-top:6px;">
+              <b>{{ uploaded_filename }}</b> saved on the server.<br>
+              Word count: <b>{{ word_count }}</b>
+            </div>
+          {% else %}
+            <div class="statvalue">No file yet</div>
+            <div class="meta" style="margin-top:6px;">Upload Limerick.txt to complete step 4e.</div>
+          {% endif %}
+        </div>
+
+        <div class="statbox">
+          <div class="statlabel">Tip</div>
+          <div class="meta" style="margin-top:6px;">
+            Use <a href="/login" style="
+
